@@ -6,9 +6,9 @@ from elasticsearch.helpers import bulk
 
 
 username='postgres'
-password='1234'
+password='admin'
 host='localhost'
-database= 'SAE'
+database= 'Sae'
 schema = ""
 
 # # Gurval
