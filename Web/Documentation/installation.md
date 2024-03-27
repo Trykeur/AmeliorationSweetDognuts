@@ -16,8 +16,7 @@ Vous retrouverez les scripts necessaire dans le [dossier Implementation sur Gith
 
 
 ### Mise en place (Automatique)
-Pour mettre en place automatiquement la base de données, un fichier de backUp est disponible sur GIt : 
-
+Pour mettre en place automatiquement la base de données, un fichier de backUp est disponible sur [ici](https://drive.google.com/file/d/1qumphe1AGi2yokk4-T1NRhx8MqgGMXOz/view?usp=drive_link) : 
 La backup est à utiliser dans une base vièrge. Elle permet de créer toutes les tables, relations et contraintes necessaires, ainsi que peupler la base de films et artists. (+ de 500 enregistrements)
 -- TODO : nombre d'enregistrements
 

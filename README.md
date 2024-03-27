@@ -1,2 +1,2 @@
 # AmeliorationSweetDognuts
-Ici on améliore le projet du groupe SweetDonuts
+Ici on essaye d'améliorer le projet du groupe SweetDonuts
