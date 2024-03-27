@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html data-bs-theme="dark">
+    <head>
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+        <title>Sweet donuts - Login</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+        <link rel="stylesheet" href="CSS/bootstrap.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    </head>
+
+    <style>
+        body{
+            background-image: url('https://www.supersoluce.com/sites/default/files/node/2864033/soluce-avatar-frontiers-of-pandora-tigeclohe-foret-soyeuse-image021.jpg');
+            backdrop-filter: brightness(70%);
+        }
+    </style>
+
+    <body class="vh-100 bg-image">
+        
+        <header class="sticky-top bg-transparent" include-html="ElemHTML/header.html"></header>
+
+        <main class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                    <div class="mb-4"></div>
+                    <div class="card" style="border-radius: 15px;" >
+                        <div class="card-body p-5 text-light">
+                            <h2 class="text-uppercase text-center mb-5">Login</h2>
+        
+                            <form id="login-form">
+                                <div class="form-floating mb-4">
+                                    <input type="email" placeholder="Email" id="email-input-login" class="bg-transparent form-control rounded-0 form-control-lg border-0 border-bottom shadow-none" required/>
+                                    <label class="form-label bg-transparent" for="email-input-login">Email</label>
+                                </div>
+        
+                                <div class="form-floating mb-4">
+                                    <input type="password" placeholder="Mot de passe" id="password-input-login" class="bg-transparent form-control rounded-0 form-control-lg border-0 border-bottom shadow-none" required/>
+                                    <label class="form-label bg-transparent" for="password-input-login">Password</label>
+                                </div>
+                                
+                                <p id="input-error-login" class="text-center mt-5 mb-0 text-danger collapse">Email or password incorrect</p>
+                                <p id="input-success-login" class="text-center mt-5 mb-0 text-success collapse">Successfull connection</p>
+                                
+                                <div class="d-flex justify-content-center">
+                                    <button type="submit" class="btn btn-success btn-block btn-lg text-body">
+                                        <span class="spinner-border spinner-border-sm collapse" role="status" aria-hidden="true"></span>
+                                        Login
+                                    </button>
+                                </div>
+                                
+                                <p class="text-center mt-5 mb-0">
+                                    Haven't account ?
+                                    <a href="register.html" class="fw-bold text-white"><u>Create an account</u></a>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main> 
+    
+        <footer include-html="ElemHTML/footer.html"></footer>
+    
+        <script src="scripts/includeHTML.js"></script>
+        <script src="scripts/header.js"></script>
+
+    </body>
+</html>

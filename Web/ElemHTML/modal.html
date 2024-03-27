@@ -1,0 +1,54 @@
+<section class="modal fade" id="movie-details-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <input type='hidden' id='id_oeuvre-movie-details-modal' value=undefined />
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            
+            
+            <div id="movie-details-modal-poster" 
+                    class="modal-header bg-image col-12 d-flex align-items-start" 
+                    style="background: no-repeat center/100%; height: 50vh">
+                    <img class="rounded" src="Images/SweetDonutLogo_75.png"></img>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+
+            <div class="modal-body">                        
+                <div class="d-flex justify-content-between">
+                    <p><strong>Release year : </strong><span id="movie-details-modal-realeaseYear">[Year]</span></p>
+                    <div id="movie-details-modal-rating"></div>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <p><strong>Duration : </strong><span id="movie-details-modal-runtime">[nb]</span> mn</p>
+                    <i id="movie-details-modal-bookmark-icon" class="bi bi-bookmark-check fs-3"></i>
+
+                </div>
+                <p id="movie-details-modal-synopsis">[synopsis]</p>
+                
+                <div id="movie-details-modal-recommandation">
+                    
+                </div>
+            </div>
+
+
+            <div class="modal-footer d-flex flex-column justify-content-start align-items-start">
+                <h2>About : <span id="movie-details-modal-title">[Title]</span></h2>
+                <p>
+                    <strong>Creation : </strong>
+                    <span id="movie-details-modal-creator">[Nom Acteur]</span>
+                </p>
+                
+                <p>
+                    <strong>Distribution : </strong>
+                    <span id="movie-details-modal-distribution">[Nom Acteur],[Nom Acteur],[Nom Acteur],[Nom Acteur],...</span>
+                </p>
+                
+                <p>
+                    <strong>Categories : </strong>
+                    <span id="movie-details-modal-genres">[genre1],[genre2],[genre3],...</span>
+                </p>
+            </div>
+
+
+        </div>
+    </div>
+</section>
