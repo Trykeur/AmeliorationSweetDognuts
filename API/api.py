@@ -3,6 +3,7 @@ import uvicorn
 from fastapi import FastAPI, Query, status
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.responses import FileResponse
 from typing import List
 
 # Connection to Data base
@@ -75,6 +76,9 @@ def RequestFilterWithScore(data,dataName,field=None,limit=False):
 def read_root():
     return "API Système de recommandation : Les donuts sucrés au sucre"
 
+@app.get("/favicon.ico")
+def Get_favicon():
+    return FileResponse("../Web/Images/SweetDonutLogo.ico")
 
 """---------------------------------------- API - GENRE ----------------------------------------"""
 @app.get("/genres") 
