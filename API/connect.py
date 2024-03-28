@@ -4,20 +4,12 @@ import numpy as np
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
 
-
+#TODO : Faire un fichier de connection 
 username='postgres'
 password='admin'
 host='localhost'
 database= 'Sae'
 schema = ""
-
-# # Gurval
-# username="postgres"
-# password="root"
-# host="localhost"
-# database="SAE"
-# schema = ""
-
 
 # Connexion SQL
 print("-- Database connexion ...")
@@ -108,6 +100,6 @@ def CreateAccount(name,email,password):
         connection.execute(sql.text(f"INSERT INTO Client_ (email, pwd, profil_name) values ('{email}', '{password}', '{name}');"))
         id_client = pd.read_sql_query(sql.text(f"SELECT * FROM _Client WHERE email = '{email}'"),connection)['id_client'].values[0]
         id_profil = pd.read_sql_query(sql.text(f"SELECT * FROM _Profil WHERE id_client = '{id_client}'"),connection)['id_profil'].values[0]
-
-    # connection.commit() TODO : décommenter pour enregistrer dans la BDD (sinon ce sont des comptes temporaires j'usqu'a relancement de API)
+        connection.commit()
+        
     return id_client, id_profil

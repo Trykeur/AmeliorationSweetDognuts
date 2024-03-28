@@ -35,6 +35,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 """---------------------------------------- FUNCTIONS ----------------------------------------"""
 def RequestFilter(data,dataName,field=None,limit=False):
     if(field):
@@ -110,7 +111,8 @@ def login(data:dict):
     
     id_client = CLIENT.loc[(CLIENT['email'] == data['email']) & (CLIENT['pwd'] == data['password'])]
 
-    if(id_client.empty) :return JSONResponse(status_code=status.HTTP_401_UNAUTHORIZED, content=f"email or password incorrect")
+    if(id_client.empty) :
+        return JSONResponse(status_code=status.HTTP_401_UNAUTHORIZED, content=f"email or password incorrect")
     
     return JSONResponse(status_code=status.HTTP_200_OK, content=int(id_client.index[0]))
 
@@ -148,7 +150,8 @@ def GetAllMovie(field: List[str] = Query(None),limit = False):
     - http://127.0.0.1:8000/movie?limit=10
     - http://127.0.0.1:8000/movie?field=id_oeuvre&field=original_title
     """
-    if(MOVIE.empty) :return JSONResponse(status_code=status.HTTP_404_NOT_FOUND, content='No recorded movies')
+    if(MOVIE.empty) :
+        return JSONResponse(status_code=status.HTTP_404_NOT_FOUND, content='No recorded movies')
     
     Movies = MOVIE.drop(['id_genre_list'], axis=1)
     Movies.rename(columns={'genre_name_list': 'genres'},inplace=True)
@@ -201,8 +204,6 @@ def GetMovieByIDWithArtist(id_oeuvre):
     Movie[0]['Artists'] = Artists.to_dict('records')
     
     return JSONResponse(status_code=status.HTTP_200_OK, content=Movie)
-
-
 
 
 """---------------------------------------- ARTISTS ----------------------------------------"""
