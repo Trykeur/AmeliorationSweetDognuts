@@ -1,5 +1,5 @@
 #!/bin/bash
 
-gnome-terminal -- bash -c "python ../API/api.py; exec bash"
+gnome-terminal -- bash -c "python ../../API/api.py; exec bash"
 
 docker run --rm -p 9200:9200 -p 9300:9300 -e "xpack.security.enabled=false" -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:8.7.0
