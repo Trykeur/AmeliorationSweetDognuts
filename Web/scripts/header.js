@@ -1,6 +1,6 @@
 const IP_ADRESS = 'http://127.0.0.1:8000';
 const API_ON = true;
-const LIMIT = 10;
+const LIMIT = 8;   
 
 
 
@@ -617,19 +617,15 @@ function RegisterPageOnLoad() {
 }
 
 
-
-
 /*----------------------------------------------------------------------------------------------------
 ----------------------------------------- MAIN EXECUTION ---------------------------------------------
 ------------------------------------------------------------------------------------------------------*/
-document.addEventListener('DOMContentLoaded', function(){
+window.addEventListener('load', function(){
     /*-------------------- HEADER --------------------*/
     SetDropdownMenuHeader();            // Set Categories in dropdown menu
     SetAccountHeader();                 // Set the account header (Connected / disconnected) 
     AddAnimationSearchLinkHeader();     // Add animation in search button (arrow)
 
-
-    console.log(document.title);
     /*-------------------- INIT PAGES --------------------*/
     if (document.title == "Sweet donuts - Home") {
         HomePageOnLoad();
@@ -653,42 +649,6 @@ document.addEventListener('DOMContentLoaded', function(){
     if (getCookie('Registered') != '') {
         AddAnimationPopUpInformation("Created account", false);
         resetCookie('Registered');
-    }
+    } 
 });
 
-
-// window.addEventListener('load', function () {
-//     /*-------------------- HEADER --------------------*/
-//     SetDropdownMenuHeader();            // Set Categories in dropdown menu
-//     SetAccountHeader();                 // Set the account header (Connected / disconnected) 
-//     AddAnimationSearchLinkHeader();     // Add animation in search button (arrow)
-
-
-
-//     /*-------------------- INIT PAGES --------------------*/
-//     if (this.document.title == "Sweet donuts - Home") {
-//         HomePageOnLoad();
-//         SetBookMarkEventListener();
-//     }
-
-//     if (this.document.title == "Sweet donuts - About") { AddAnimationTeamMember() }
-
-//     if (this.document.title == "Sweet donuts - Login") { LoginPageOnLoad() }
-
-//     if (this.document.title == "Sweet donuts - Register") { RegisterPageOnLoad() }
-
-//     if (this.document.title == "Sweet donuts - Advanced Search") { SetBookMarkEventListener(); }
-
-//     /*-------------------- ADD POP UP --------------------*/
-//     if (getCookie('Connected') != '') {
-//         AddAnimationPopUpInformation("Connected", false);
-//         resetCookie('Connected');
-//     }
-
-//     if (getCookie('Registered') != '') {
-//         AddAnimationPopUpInformation("Created account", false);
-//         resetCookie('Registered');
-//     }
-
-
-// });

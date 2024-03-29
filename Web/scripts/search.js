@@ -127,11 +127,17 @@ function search(){
     }
 }
 
-window.addEventListener('load', function () {
-
+document.addEventListener('DOMContentLoaded', function(){
     SetDropdownGenreSearch();
     etoileListener();
     yearPicker();
     search();
 
-});
+})
+
+// window.addEventListener('load', function () {
+//     SetDropdownGenreSearch();
+//     etoileListener();
+//     yearPicker();
+//     search();
+// });
