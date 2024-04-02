@@ -103,3 +103,17 @@ def CreateAccount(name,email,password):
         connection.commit()
         
     return id_client, id_profil
+
+def AddProfilOeuvre(id_profil,id_oeuvre):
+    with engine.connect() as connection :
+        connection.execute(sql.text(f"INSERT INTO _profil_oeuvre (id_profil, id_oeuvre) values ('{id_profil}', '{id_oeuvre}');"))
+
+        connection.commit() # TODO : commenter pour ne pas enregistrer dans la BDD (sinon ce sont des comptes temporaires j'usqu'a relancement de API)
+    return
+
+def RemoveProfilOeuvre(id_profil,id_oeuvre):
+    with engine.connect() as connection :
+        connection.execute(sql.text(f"DELETE FROM _profil_oeuvre WHERE id_profil='{id_profil}' AND id_oeuvre='{id_oeuvre}' ;"))
+
+        connection.commit() # TODO : commenter pour ne pas enregistrer dans la BDD (sinon ce sont des comptes temporaires j'usqu'a relancement de API)
+    return

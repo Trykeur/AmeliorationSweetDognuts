@@ -1,0 +1,54 @@
+Personnes et leurs professions:                                             name.basics.tsv
+    Nom de la personne 
+    Date de naissance
+    Date de mort
+    Professions
+    Film relié
+
+
+Films selon les langues et régions:                                         title.akas.tsv
+    Ordre
+    Titre
+    Région
+    Langue
+    Type (en relation avec imdb)
+    Attributs
+    Titre original ?
+
+
+Films avec durée et genres:                                                 title.basics.tsv
+    Titre
+    Titre original
+    Adulte ?
+    Année de début
+    Année de fin
+    Durée
+    Genre
+
+
+Directeurs et scénaristes des films:                                        title.crew.tsv
+    Id du film
+    Directeurs
+    Scénaristes
+
+
+Précisions sur les épisodes:                                                title.episode.tsv
+    Id episode
+    Id episode parent
+    Numéro de saison
+    Numéro de l'épisode
+
+
+Association entre les personnes et les films:                               title.principals.tsv
+    Id du film
+    Ordre (numéro du participant)
+    Id de la personne
+    Profession
+    Travail (?)
+    Personnage joué
+
+
+Notes des films:                                                            title.ratings.tsv
+    Id du film
+    Note moyenne
+    Nombre de votes

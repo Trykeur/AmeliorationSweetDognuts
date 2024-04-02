@@ -1,149 +1,129 @@
+
+
 <!DOCTYPE html>
 <html data-bs-theme="dark">
+    <head>
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+        <title>Sweet donuts - About</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
 
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Sweet donuts - About</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <link rel="stylesheet" href="CSS/bootstrap.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    </head>
 
-    <link rel="stylesheet" href="CSS/bootstrap.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-        crossorigin="anonymous"></script>
-</head>
+    <style>
+        body {overflow-x: hidden;}
+        iframe{
+            filter: blur(0px) grayscale(30%);;
+            transition-property: opacity;
+            transition-duration: 1000ms;
+            pointer-events: none;
+            top: 0px;
+            left: 0px;
+            transform: scale(1.3);
+            z-index: -1;
+            position: absolute;
+            
+        }
+        
+        iframe, .iframe-spacer{
+            min-height: 100vh;
+            min-width: 100%;
+        }
 
-<style>
-    body {
-        overflow-x: hidden;
-    }
+        ::-webkit-scrollbar {display: none;}
+    </style>
 
-    iframe {
-        filter: blur(0px) grayscale(30%);
-        ;
-        transition-property: opacity;
-        transition-duration: 1000ms;
-        pointer-events: none;
-        top: 0px;
-        left: 0px;
-        transform: scale(1.3);
-        z-index: -1;
-        position: absolute;
+    <body>
+        <header class="sticky-top bg-transparent" include-html="ElemHTML/header.html"></header>
 
-    }
+        <main class="container">
+            <iframe title="BackgroundVideo" src="Video/BackgroundVideo.mp4" allow="autoplay; encrypted-media; picture-in-picture;" allowfullscreen></iframe>
+            <div class="iframe-spacer"></div>
 
-    iframe,
-    .iframe-spacer {
-        min-height: 100vh;
-        min-width: 100%;
-    }
-
-    ::-webkit-scrollbar {
-        display: none;
-    }
-</style>
-
-<body>
-
-    <header class="sticky-top bg-transparent" include-html="ElemHTML/header.html"></header>
-
-    <main class="container">
-        <iframe title="BackgroundVideo" src="Video/BackgroundVideo.mp4" allow="autoplay; encrypted-media; picture-in-picture;" allowfullscreen></iframe>
-        <div class="iframe-spacer"></div>
-
-        <h1 class="text-center mt-5">About us</h1>
-
-        <section class="d-flex justify-content-between my-5">
-            <article class="card h-min-100 p-3 m-1 col-6" style="border-radius: 15px;">
-                <h1 class="text-center">Sweet donuts</h1>
-                <p>
-                    We are a team of IT developers dedicated to the realization of an innovative eco-conscious streaming
-                    website project.
-                    Each team member brings his or her own expertise to bear on the creation of a unique platform,
-                    combining cutting-edge technical skills with a commitment to the environment.
-                </p>
-                <p>
-                    What particularly sets us apart is our commitment to environmental sustainability.
-                    Throughout the development process, we integrate eco-responsible practices aimed at reducing the
-                    environmental impact of the online service.
-                </p>
-            </article>
+            <h1 class="text-center mt-5">About us</h1>
+            
+            <section class="d-flex justify-content-between my-5">
+                <article class="card h-min-100 p-3 m-1 col-6" style="border-radius: 15px;">
+                    <h1 class="text-center">Sweet donuts</h1>
+                    <p> 
+                        We are a team of IT developers dedicated to the realization of an innovative eco-conscious streaming website project.
+                        Each team member brings his or her own expertise to bear on the creation of a unique platform, combining cutting-edge technical skills with a commitment to the environment.
+                    </p>
+                    <p>
+                        What particularly sets us apart is our commitment to environmental sustainability.
+                        Throughout the development process, we integrate eco-responsible practices aimed at reducing the environmental impact of the online service.
+                    </p>
+                </article>
 
 
-            <article class="card col-5" style="border-radius: 15px;">
-                <div class="card-body p-5 text-light">
-                    <h2 class="text-uppercase text-center mb-5">Contact</h2>
-                    <form id="contact-form" action="https://formspree.io/f/xzbojwry" method="POST">
-                        <div class="form-floating mb-4">
-                            <input type="email" name="email" placeholder="Email" id="email-input-contact"
-                                class="bg-transparent form-control rounded-0 form-control-lg border-0 border-bottom shadow-none"
-                                required />
-                            <label class="form-label bg-transparent" for="email-input-login">Email</label>
-                        </div>
-
-                        <div class="form-floating mb-4">
-                            <textarea name="message" rows="4" cols="50" placeholder="Message" id="message-input-contact"
-                                class="bg-transparent  rounded-0 border-0 border-bottom " required> </textarea>
-                            <label class="form-label bg-transparent" for="password-input-login">Message</label>
-                        </div>
-
-                        <p id="input-success-contact" class="text-center mt-5 mb-0 text-success collapse">Sending
-                            Successfull</p>
-
-                        <div class="d-flex justify-content-center">
-                            <button type="submit" class="btn btn-success btn-block btn-lg text-body">
-                                <span class="spinner-border spinner-border-sm collapse" role="status"
-                                    aria-hidden="true"></span>
-                                Send
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </article>
-
-
-        </section>
-
-        <section class="card p-3 my-5 text-center col-12 d-flex " style="border-radius: 15px;">
-            <h1>Our team</h1>
-            <article id="team-members" class="d-flex justify-content-around">
-                <div class="card col-3 mx-2">
-                    <img src="Images/Team/Loane.jpg" class="card-img-top" alt="Team member photo">
-                    <div class="card-body text-center">
-                        <h3 class="card-title">Loane</h3>
-                        <p class="card-text">Designer</p>
+                <article class="card col-5" style="border-radius: 15px;" >
+                    <div class="card-body p-5 text-light">
+                        <h2 class="text-uppercase text-center mb-5">Contact</h2>
+                        <form id="contact-form" action="https://formspree.io/f/xzbojwry" method="POST">
+                            <div class="form-floating mb-4">
+                                <input type="email" name="email" placeholder="Email" id="email-input-contact" class="bg-transparent form-control rounded-0 form-control-lg border-0 border-bottom shadow-none" required/>
+                                <label class="form-label bg-transparent" for="email-input-login">Email</label>
+                            </div>
+        
+                            <div class="form-floating mb-4">
+                                <textarea name="message" rows="4" cols="50" placeholder="Message" id="message-input-contact" class="bg-transparent form-control rounded-0 border-0 border-bottom shadow-none" required> </textarea>
+                                <label class="form-label bg-transparent" for="password-input-login">Message</label>
+                            </div>
+                            
+                            <p id="input-success-contact" class="text-center mt-5 mb-0 text-success collapse">Sending Successfull</p>
+                            
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-success btn-block btn-lg text-body">
+                                    <span class="spinner-border spinner-border-sm collapse" role="status" aria-hidden="true"></span>
+                                    Send
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                </div>
+                </article>
 
-                <div class="card col-3 mx-2">
-                    <img src="Images/Team/Oscar.jpg" class="card-img-top" alt="Team member photo">
-                    <div class="card-body text-center">
-                        <h3 class="card-title">Oscar</h3>
-                        <p class="card-text">Designer</p>
+
+            </section>
+
+            <section class="card p-3 my-5 text-center col-12 d-flex " style="border-radius: 15px;">
+                <h1>Our team</h1>
+                <article id="team-members" class="d-flex justify-content-around">
+                    <div class="card col-3 mx-2">
+                        <img src="Images/Team/Loane.jpg" class="card-img-top" alt="Team member photo">
+                        <div class="card-body text-center">
+                          <h3 class="card-title">Loane</h3>
+                          
+                        </div>
                     </div>
-                </div>
 
-                <div class="card col-3 mx-2">
-                    <img src="Images/Team/Gurval.jpg" class="card-img-top" alt="Team member photo">
-                    <div class="card-body text-center">
-                        <h3 class="card-title">Gurval</h3>
-                        <p class="card-text">Designer</p>
+                    <div class="card col-3 mx-2">
+                        <img src="Images/Team/Oscar.jpg" class="card-img-top" alt="Team member photo">
+                        <div class="card-body text-center">
+                          <h3 class="card-title">Oscar</h3>
+                        </div>
                     </div>
-                </div>
-            </article>
 
-        </section>
+                    <div class="card col-3 mx-2">
+                        <img src="Images/Team/Gurval.jpg" class="card-img-top" alt="Team member photo">
+                        <div class="card-body text-center">
+                          <h3 class="card-title">Gurval</h3>
+                        </div>
+                    </div>
+                </article>
 
+            </section>
 
+            
 
-    </main>
+        </main> 
+    
+        <footer include-html="ElemHTML/footer.html"></footer>
+    
+        <script src="scripts/includeHTML.js"></script>
+        <script src="scripts/header.js"></script>
 
-    <footer include-html="ElemHTML/footer.html"></footer>
-
-    <script src="scripts/includeHTML.js"></script>
-    <script src="scripts/header.js"></script>
-
-</body>
-
+    </body>
 </html>

@@ -1,6 +1,7 @@
 const IP_ADRESS = 'http://127.0.0.1:8000';
 const API_ON = true;
-const LIMIT = 8;   
+const LIMIT = 20;
+const LIMIT_CATEGORIES = 10;
 
 
 
@@ -39,7 +40,6 @@ async function GET_OMDb_data(title) {
     if (!API_ON) { return { 'poster': undefined, 'Plot': lorem } }
 
     try {
-        //let response = await fetch(`http://www.omdbapi.com/?apikey=[apikey]&t="${title}"`);
         let response = await fetch(`http://www.omdbapi.com/?apikey=a2a3f977&t="${title}"`);
         var data = await response.json();
     } catch (error) {
@@ -99,6 +99,12 @@ function resetCookie(cname) {
     setCookie(cname, '', 0);
 }
 
+
+
+
+
+
+
 /*-------------------------------------------------------------------------------------------
 ---------------------------------------- POP UP --------------------------------------------
 --------------------------------------------------------------------------------------------*/
@@ -120,16 +126,29 @@ function AddAnimationPopUpInformation(message, animated = true) {
 
 }
 
+
+
+
+
+
+
 /*-------------------------------------------------------------------------------------------
 ----------------------------------------- HEADER ---------------------------------------------
 --------------------------------------------------------------------------------------------*/
+function SearchBar() {
+    let searchFormHeader = document.getElementById("search-form-header");
+    searchFormHeader.addEventListener("submit", (e) => {
+        let searchBarHeader = document.getElementById("search-bar-header");
+        window.location.href = `/search.html?search="${searchBarHeader.value}"`; // TODO : La redirection n'est pas fonctionelle
+    });
+}
 
 function SetDropdownMenuHeader() {
     /**
      * Set the dropdown menu data with categories in the API.
      */
     let dropdownHeader = document.getElementById("categories-dropdown-menu-header");
-    LISTE_GENRE = APIResquest(`/genres?limit=${LIMIT}`);
+    LISTE_GENRE = APIResquest(`/genres?limit=${LIMIT_CATEGORIES}`);
     LISTE_GENRE.then(liste_genre => {
         liste_genre.forEach(genre => {
             let elem_li = document.createElement("li");
@@ -177,6 +196,7 @@ function AddAnimationAccountHeader() {
     disconnectButton.addEventListener('click', function () {
         resetCookie('Client');
         resetCookie('Profil');
+        resetCookie('Watched');
         AddAnimationPopUpInformation("Disconnecting");
         setInterval(function () { window.location.reload(); }, 3000);
     });
@@ -197,6 +217,12 @@ function SetAccountHeader() {
         AddAnimationAccountHeader();
     }
 }
+
+
+
+
+
+
 
 /*-------------------------------------------------------------------------------------------
 ----------------------------------------- ABOUT ---------------------------------------------
@@ -260,7 +286,7 @@ function CreateStarsBoxRating(rating) {
     return starsBox
 }
 
-function SetMovieModalDetails(IDMovie, title, rating, runtime, realeaseYear, genres, synopsis, poster, watched) {
+function SetMovieModalDetails(IDMovie, title, rating, runtime, realeaseYear, genres, synopsis, poster, id_genre, watched) {
     document.getElementById('id_oeuvre-movie-details-modal').value = IDMovie;
     SetBookMarkIcon(document.getElementById('movie-details-modal-bookmark-icon'), watched)
 
@@ -306,10 +332,25 @@ function SetMovieModalDetails(IDMovie, title, rating, runtime, realeaseYear, gen
 
     Elem_recommandation.innerHTML = '';
 
-    //let data = APIResquest(`/recommandation/by/id_oeuvre/${IDMovie}?limit=${LIMIT}`);
-    APIResquest(`/movie?limit=${LIMIT}`).then(data => {
-        CreateMovieList(data, "Other users also watched ", "movie-details-modal-recommandation", Elem_recommandation)
+    let loader = CreateMovieLoader("Other users also watched", Elem_recommandation);
+
+    if (getCookie('Profil') != '') {
+        var data = APIResquest(`/recommandation/by/id_oeuvre/${IDMovie}/id_profil/${getCookie('Profil')}?limit=${LIMIT}`);
+    } else {
+        var data = APIResquest(`/recommandation/by/id_oeuvre/${IDMovie}/id_profil/null}?limit=${LIMIT}`);
+    }
+    let OtherViewers = false;
+    data.then(data => {
+        if (data.length > 0) {
+            CreateMovieList(data, "Other users also watched", "movie-details-modal-recommandation", loader);
+            OtherViewers = true;
+        }
     });
+
+    if (!OtherViewers) {
+        let data = APIResquest(`/recommandation/by/genre/${id_genre}?limit=${LIMIT}`);
+        data.then(data => { CreateMovieList(data, "Same categories", "movie-details-modal-recommandation", loader); });
+    }
 }
 
 function CreateMovieCard(title, rating, src, genre, runtime) {
@@ -352,9 +393,8 @@ function CreateMovieCard(title, rating, src, genre, runtime) {
     return elem_li
 }
 
-function CreateMovieList(data, title, ID, parent = document.getElementsByTagName("main")[0]) {
-    var section = document.createElement("section");
-    section.innerHTML += `<h4>${title}</h4>`;
+function CreateMovieList(data, title, ID, parent) {
+    parent.innerHTML = `<h4>${title}</h4>`;
 
     var liste_ul = document.createElement("section");
     liste_ul.setAttribute("id", ID);
@@ -362,32 +402,51 @@ function CreateMovieList(data, title, ID, parent = document.getElementsByTagName
 
     data.forEach(movie => {
         GET_OMDb_data(movie.original_title).then(OMDb_data => {
-            let trailer_url = undefined;
-            // GetURLTrailer(OMDb_data.imdbID).then(DataTrailer => {});
+            LISTE_GENRE = APIResquest(`/movie/id/${movie.id_oeuvre}?field=id_genre_list`);
+            LISTE_GENRE.then(liste_genre => {
+                let id_genre = liste_genre[0].id_genre_list[0];
 
-            let IDMovie = movie.id_oeuvre;
-            let title = movie.original_title;
-            let rating = SetMovieAttribute(movie.average_rating / 2, OMDb_data.imdbRating / 2);
-            let runtime = movie.runtime_minutes;
-            let realeaseYear = SetMovieAttribute(movie.realease_year, OMDb_data.Year);
-            let genres = movie.genres;
+                let trailer_url = undefined; // GetURLTrailer(OMDb_data.imdbID).then(DataTrailer => {});
 
-            let poster = OMDb_data.Poster; // RANDOM IMAGES : https://picsum.photos/200/200?random="+Math.floor(Math.random() * 100)
-            if (poster == undefined || poster == "N/A") { poster = 'Images/SweetDonutLogo.png' }
-            let synopsis = OMDb_data.Plot;
+                let IDMovie = movie.id_oeuvre;
+                let title = movie.original_title;
+                let rating = SetMovieAttribute(movie.average_rating / 2, OMDb_data.imdbRating / 2);
+                let runtime = movie.runtime_minutes;
+                let realeaseYear = SetMovieAttribute(movie.realease_year, OMDb_data.Year);
+                let genres = movie.genres;
 
-            watched = JSON.parse("[" + getCookie('Watched') + "]").includes(IDMovie);
+                let poster = OMDb_data.Poster; // RANDOM IMAGES : https://picsum.photos/200/200?random="+Math.floor(Math.random() * 100)
+                if (poster == undefined || poster == "N/A") { poster = 'Images/SweetDonutLogo.png' }
+                let synopsis = OMDb_data.Plot;
 
-            let elem_li = CreateMovieCard(title, rating, poster, genres, runtime)
-            liste_ul.appendChild(elem_li);
+                watched = JSON.parse("[" + getCookie('Watched') + "]").includes(IDMovie);
 
-            AddHoverEffect(elem_li);
-            AddOpenModalOnClick(elem_li, IDMovie, title, rating, runtime, realeaseYear, genres, synopsis, poster, watched);
+                let elem_li = CreateMovieCard(title, rating, poster, genres, runtime)
+                liste_ul.appendChild(elem_li);
+
+                AddHoverEffect(elem_li);
+                AddOpenModalOnClick(elem_li, IDMovie, title, rating, runtime, realeaseYear, genres, synopsis, poster, id_genre, watched);
+
+
+
+            });
         });
     });
 
-    section.appendChild(liste_ul);
+    parent.appendChild(liste_ul);
+}
+
+function CreateMovieLoader(title, parent = document.getElementsByTagName("main")[0]) {
+    var section = document.createElement("section");
+    section.innerHTML += `
+        <h4>${title}</h4>
+        <div class="spinner-border border-0" role="status">
+            <img class="w-100" src="Images/donut_spin.png" alt="donut spin"/>
+        </div>
+        <span class="px-1">Loading ...</span>
+    `;
     parent.appendChild(section);
+    return section;
 }
 
 const HOVER_DELAY = 1;
@@ -415,9 +474,9 @@ function AddHoverEffect(item) {
     })
 }
 
-function AddOpenModalOnClick(item, IDMovie, title, rating, runtime, realeaseYear, genres, synopsis, poster, watched) {
+function AddOpenModalOnClick(item, IDMovie, title, rating, runtime, realeaseYear, genres, synopsis, poster, id_genre, watched) {
     item.addEventListener('click', function (e) {
-        SetMovieModalDetails(IDMovie, title, rating, runtime, realeaseYear, genres, synopsis, poster, watched)
+        SetMovieModalDetails(IDMovie, title, rating, runtime, realeaseYear, genres, synopsis, poster, id_genre, watched)
     });
 }
 
@@ -444,6 +503,7 @@ function AddEventListenerBookmarkIcon_MovieRegistered() {
     if (bookmarkIcon) {
         bookmarkIcon.addEventListener('click', function (e) {
             let id_oeuvre = parseInt(document.getElementById('id_oeuvre-movie-details-modal').value);
+
             fill = bookmarkIcon.classList.contains('bi-bookmark-check-fill')
             SetBookMarkIcon(bookmarkIcon, !fill)
 
@@ -452,7 +512,7 @@ function AddEventListenerBookmarkIcon_MovieRegistered() {
                 movieList = JSON.parse("[" + getCookie('Watched') + "]").filter(function (id) { return id !== id_oeuvre })
                 setCookie('Watched', movieList, 1);
 
-                AddAnimationPopUpInformation("Deleting to list"); // TODO : modifier le titre
+                AddAnimationPopUpInformation("Deleting to list");
                 setInterval(function () { window.location.href = window.location.href; }, 3000);
 
             } else {
@@ -461,7 +521,7 @@ function AddEventListenerBookmarkIcon_MovieRegistered() {
                 movieList.push(id_oeuvre)
                 setCookie('Watched', movieList, 1);
 
-                AddAnimationPopUpInformation("Adding to list"); // TODO : modifier le titre
+                AddAnimationPopUpInformation("Adding to list");
                 setInterval(function () { window.location.href = window.location.href; }, 3000);
             }
         });
@@ -479,25 +539,28 @@ function AddEventListenerBookmarkIcon_MovieRegistered() {
 ------------------------------------------------------------------------------------------------------*/
 function HomePageOnLoad() {
     if (getCookie('Client') != '') {
-        //data = APIResquest(`/recommandation/by/id_profil/${getCookie('Client')}`);
-        data = APIResquest(`/movie?limit=${LIMIT}`);
-        data.then(data => { CreateMovieList(data, "Recommended for you", "user-recommandation-movie-list-group") });
+        let loader_1 = CreateMovieLoader("Recommended for you");
+        data = APIResquest(`/old_recommandation/by/id_profil/${getCookie('Profil')}`);
+        data.then(data => { CreateMovieList(data, "Recommended for you", "user-recommandation-movie-list-group", loader_1) });
 
+        let loader_2 = CreateMovieLoader("Watch again");
         data = APIResquest(`/client/${getCookie('Client')}/get/movie?limit=${LIMIT}`);
         data.then(data => {
-            if (data.length > 0) { CreateMovieList(data, "Watch again", "user-watch-movie-list-group") }
+            if (data.length > 0) { CreateMovieList(data, "Watch again", "user-watch-movie-list-group", loader_2) }
         });
     }
 
+    loader = CreateMovieLoader("Popular films");
     data = APIResquest(`/recommandation/TopPopularMovies?limit=${LIMIT}`);
-    data.then(data => { CreateMovieList(data, "Popular films", "top-popular-movie-list-group") });
+    data.then(data => { CreateMovieList(data, "Popular films", "top-popular-movie-list-group", loader) });
 
 
-    LISTE_GENRE = APIResquest(`/genres?limit=${LIMIT}`);
+    LISTE_GENRE = APIResquest(`/genres`);
     LISTE_GENRE.then(liste_genre => {
         liste_genre.forEach(genre => {
+            let loader = CreateMovieLoader(genre.genre_name);
             let data = APIResquest(`/recommandation/by/genre/${genre.id_genre}?limit=${LIMIT}`);
-            data.then(data => { CreateMovieList(data, genre.genre_name, `genre_${genre.id_genre}-movie-list-group`); });
+            data.then(data => { CreateMovieList(data, genre.genre_name, `genre_${genre.id_genre}-movie-list-group`, loader); });
         });
     });
 }
@@ -617,28 +680,32 @@ function RegisterPageOnLoad() {
 }
 
 
+
+
 /*----------------------------------------------------------------------------------------------------
 ----------------------------------------- MAIN EXECUTION ---------------------------------------------
 ------------------------------------------------------------------------------------------------------*/
-window.addEventListener('load', function(){
+window.addEventListener('load', function () {
     /*-------------------- HEADER --------------------*/
     SetDropdownMenuHeader();            // Set Categories in dropdown menu
     SetAccountHeader();                 // Set the account header (Connected / disconnected) 
     AddAnimationSearchLinkHeader();     // Add animation in search button (arrow)
+    SearchBar();
+
 
     /*-------------------- INIT PAGES --------------------*/
-    if (document.title == "Sweet donuts - Home") {
+    if (this.document.title == "Sweet donuts - Home") {
         HomePageOnLoad();
         SetBookMarkEventListener();
     }
 
-    if (document.title == "Sweet donuts - About") { AddAnimationTeamMember() }
+    if (this.document.title == "Sweet donuts - About") { AddAnimationTeamMember() }
 
-    if (document.title == "Sweet donuts - Login") { LoginPageOnLoad() }
+    if (this.document.title == "Sweet donuts - Login") { LoginPageOnLoad() }
 
-    if (document.title == "Sweet donuts - Register") { RegisterPageOnLoad() }
+    if (this.document.title == "Sweet donuts - Register") { RegisterPageOnLoad() }
 
-    if (document.title == "Sweet donuts - Advanced Search") { SetBookMarkEventListener(); }
+    if (this.document.title == "Sweet donuts - Advanced Search") { SetBookMarkEventListener(); }
 
     /*-------------------- ADD POP UP --------------------*/
     if (getCookie('Connected') != '') {
@@ -649,6 +716,10 @@ window.addEventListener('load', function(){
     if (getCookie('Registered') != '') {
         AddAnimationPopUpInformation("Created account", false);
         resetCookie('Registered');
-    } 
+    }
+
+
 });
+
+
 
