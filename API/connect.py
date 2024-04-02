@@ -11,6 +11,9 @@ host='localhost'
 database= 'Sae'
 schema = ""
 
+# HELLO I AM UNDER WATER
+# PLEASE HELP ME
+
 # Connexion SQL
 print("-- Database connexion ...")
 engine = sql.create_engine(f'postgresql://{username}:{password}@{host}/{database}')
