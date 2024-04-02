@@ -2,10 +2,11 @@ import pandas as pd
 import sqlalchemy as sql
 import matplotlib.pyplot as plt
 
+# TODO : utiliser le fichier de connexion
 username='postgres'
-password='1234'
+password='admin'
 host='localhost'
-database= 'SAE'
+database= 'Sae'
 schema = ""
 
 # Connexion

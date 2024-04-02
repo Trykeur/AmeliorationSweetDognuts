@@ -16,3 +16,5 @@ backup génère une erreur
 
 ## API
 - ajout des trailer de film
+- long à lancer
+- /remove est un post au lieu d'un delete

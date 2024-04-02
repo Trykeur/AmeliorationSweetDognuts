@@ -4,7 +4,7 @@ import numpy as np
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
 
-#TODO : Faire un fichier de connection 
+#TODO : Faire un fichier de connexion 
 username='postgres'
 password='admin'
 host='localhost'

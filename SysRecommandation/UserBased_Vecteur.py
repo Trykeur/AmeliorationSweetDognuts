@@ -5,10 +5,12 @@ import numpy as np
 import math
 import MathFunction as mathF
 
+# TODO : fichier de connexion
 username='postgres'
-password='1234'
+password='admin'
 host='localhost'
-database= 'SAE'
+database= 'Sae'
+schema = ""
 
 # Connexion
 engine = sql.create_engine(f'postgresql://{username}:{password}@{host}/{database}')
@@ -20,7 +22,6 @@ with engine.connect() as connection :
     OEUVRE_NAME = pd.read_sql_query(sql.text(f"""SELECT id_oeuvre,original_title FROM _movie """),connection)
     MOVIE_LIST = pd.read_sql_query(sql.text(f"""SELECT id_profil,_Profil_Oeuvre.id_oeuvre,id_genre,rating FROM _Profil_Oeuvre
                                             LEFT JOIN _oeuvre_genre ON _oeuvre_genre.id_oeuvre = _Profil_Oeuvre.id_oeuvre"""),connection)
-    connection.commit()
 
 GENRE_LIST = {GENRE_LIST[i][0]: GENRE_LIST[i][1] for i in range(len(GENRE_LIST))}
 

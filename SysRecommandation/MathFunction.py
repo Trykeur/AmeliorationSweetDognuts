@@ -47,4 +47,3 @@ VECTEUR_USER = [1,1,1,0,1,2,0,0,2]
 assert truncate(Sim_Jacc(VECTEUR_USER,VECTEUR_MOVIE),3) == 0.444
 assert truncate(Sim_Cos(VECTEUR_USER,VECTEUR_MOVIE),3) == 0.545
 assert truncate(Sim_euclidienne(VECTEUR_USER,VECTEUR_MOVIE),3) == 0.333
-

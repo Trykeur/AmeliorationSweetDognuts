@@ -6,10 +6,12 @@ import math
 import MathFunction as mathF
 
 # ---------------------------------------- CHARGEMENT DU JEU DE DONNEE ----------------------------------------
+# TODO : fichier de connexion
 username='postgres'
-password='1234'
+password='admin'
 host='localhost'
-database= 'SAE'
+database= 'Sae'
+schema = ""
 
 # Connexion
 engine = sql.create_engine(f'postgresql://{username}:{password}@{host}/{database}')
