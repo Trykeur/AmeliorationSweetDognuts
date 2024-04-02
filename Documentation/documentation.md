@@ -8,10 +8,11 @@ Lors du register, comme notre base de données n'est pas configurée en autocomm
 backup génère une erreur
 
 ## Base de données
-
+- fichier de backup via un google drive
+- implémentation des séries
 
 ## Système de recommandations
-
+- implémentation des recommendation hybride
 
 ## API
-
+- ajout des trailer de film
