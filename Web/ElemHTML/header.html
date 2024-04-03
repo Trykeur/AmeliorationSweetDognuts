@@ -3,29 +3,34 @@
         <div class="d-flex align-items-center justify-content-between">
             <div>
                 <a class="navbar-brand" href="home.html">
-                    <img class="rounded" src="Images/SweetDonutLogo_75.png"/>
+                    <img class="rounded" src="Images/SweetDonutLogo_75.png" />
                 </a>
                 <a class="navbar-brand mb-0 d-none d-md-inline" href="home.html"><strong>Sweet donuts</strong></a>
-                
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
             </div>
 
-            
+
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-target="#categories-dropdown-menu-header" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            data-bs-target="#categories-dropdown-menu-header" aria-expanded="false">
                             Categories
                         </a>
                         <ul id="categories-dropdown-menu-header" class="dropdown-menu position-absolute"></ul>
                     </li>
 
                     <li class="nav-item">
-                        <a id="link-search-collapse-header" class="nav-link active" data-bs-toggle="collapse" data-bs-target="#search-collapse-header" aria-expanded="false" aria-controls="collapseOne">Search <i class="bi bi-arrow-right-square"></i></a>
+                        <a id="link-search-collapse-header" class="nav-link active" data-bs-toggle="collapse"
+                            data-bs-target="#search-collapse-header" aria-expanded="false"
+                            aria-controls="collapseOne">Search <i class="bi bi-arrow-right-square"></i></a>
                     </li>
-                    
+
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="about.html">About</a>
                     </li>
@@ -41,23 +46,31 @@
 
             <div id="account-header" class="d-flex align-items-center me-3 dropdown d-none">
                 <!-- data-bs-toggle="dropdown" data-bs-target="#account-dropdown-menu-header" aria-expanded="false" -->
-                <i href="#" role="button"  class="dropdown-toggle bi bi-person-circle h1"></i>
-                
+                <i href="#" role="button" class="dropdown-toggle bi bi-person-circle h1"></i>
+
                 <ul id="account-dropdown-menu-header" data-bs-popper="static" class="dropdown-menu">
                     <li><a class="dropdown-item" href="#">My account</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a id="account-dropdown-menu-header-disconnect" class="dropdown-item text-danger">Disconnect</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a id="account-dropdown-menu-header-disconnect" class="dropdown-item text-danger">Disconnect</a>
+                    </li>
                 </ul>
             </div>
-            
+
         </div>
-        <div id="search-collapse-header" class="accordion-collapse collapse w-100" data-bs-parent="#accordionResearchBar">
+        <div id="search-collapse-header" class="accordion-collapse collapse w-100"
+            data-bs-parent="#accordionResearchBar">
             <div class="accordion-body w-100">
                 <form id="search-form-header" class="d-flex">
-                    <input id="search-bar-header" class="form-control me-2" placeholder="Search a title" aria-label="Search" required>
-                    <button class="btn btn-outline-success text-body" type="submit">Search</button>
+                    <input id="search-bar-header" class="form-control me-2" placeholder="Search a title"
+                        aria-label="Search" required>
+                    <button type="submit" class="btn btn-success btn-block btn-lg text-body ms-3">Search</button>
                 </form>
                 <a class="nav-link" aria-current="page" href="search.html">Avanced search</a>
+                <section id="resultSearchHeader" class="mt-5 d-flex flex-column ps-5">
+
+                </section>
             </div>
         </div>
     </div>
@@ -68,24 +81,42 @@
     </style>
 </nav>
 
-<div id="information-pop-up" class="d-none bg-light d-inline-flex align-items-center justify-content-start position-fixed top-0 end-0 pe-5">
+<div id="information-pop-up"
+    class="d-none bg-light d-inline-flex align-items-center justify-content-start position-fixed top-0 end-0 pe-5">
     <style>
-        .slide-in-from-right {animation: 3s ease 0s 1 slideInFromRight forwards;}
+        .slide-in-from-right {
+            animation: 3s ease 0s 1 slideInFromRight forwards;
+        }
 
         @keyframes slideInFromRight {
-            0% {display: flex;
-                transform: translateX(100%);}
-            20% {transform: translateX(0);}
-            80% {transform: translateX(0);}
-            100% {display: None;transform: translateX(100%);}
+            0% {
+                display: flex;
+                transform: translateX(100%);
+            }
+
+            20% {
+                transform: translateX(0);
+            }
+
+            80% {
+                transform: translateX(0);
+            }
+
+            100% {
+                display: None;
+                transform: translateX(100%);
+            }
         }
-     </style>
+    </style>
     <div class="spinner-border border-0" role="status">
-        <img class="w-100" src="Images/donut_spin.png" alt="donut spin"/>
+        <img class="w-100" src="Images/donut_spin.png" alt="donut spin" />
     </div>
     <span class="px-1 text-dark">Connected</span>
 </div>
 
 <style>
-    [id*='movie-list-group']::-webkit-scrollbar,  [id*='movie-details-modal']::-webkit-scrollbar{display: none;}
- </style>
+    [id*='movie-list-group']::-webkit-scrollbar,
+    [id*='movie-details-modal']::-webkit-scrollbar {
+        display: none;
+    }
+</style>
