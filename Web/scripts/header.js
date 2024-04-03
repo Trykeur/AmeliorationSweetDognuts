@@ -120,12 +120,41 @@ function AddAnimationPopUpInformation(message, animated = true) {
 ----------------------------------------- HEADER ---------------------------------------------
 --------------------------------------------------------------------------------------------*/
 function SearchBar() {
+    var baseUrl = window.location.origin;
     let searchFormHeader = document.getElementById("search-form-header");
-    searchFormHeader.addEventListener("submit", (e) => {
-        let searchBarHeader = document.getElementById("search-bar-header");
-        window.location.href = `/search.html?search="${searchBarHeader.value}"`; // TODO : La redirection n'est pas fonctionelle
+
+    if(searchFormHeader){
+        searchFormHeader.addEventListener("submit", (e) => {
+        // let searchBarHeader = document.getElementById("search-bar-header");
+        let test = baseUrl + `/Web/search.html`; 
+        window.location.href = test;
     });
+    }
 }
+
+// function SearchBar() {
+//     let searchFormHeader = document.getElementById("search-form-header");
+
+//     if(searchFormHeader){
+//         searchFormHeader.addEventListener("submit", (e) => {
+//             let searchBarValue = document.getElementById("search-bar-header").value;
+//             let request = `/Advancedsearch?title=${searchBarValue}`;
+//             var data = APIResquest(request);
+    
+//             // Affichage des résultats de la recherche
+//             data.then(data => {
+//                 if (data.length > 0) {
+//                     CreateMovieList(data, "Search result", "search-result-movie-list-group", document.getElementById('resultSearchHeader'));
+//                 }
+//                 else {
+//                     let noResSearch = document.createElement("h2");
+//                     noResSearch.innerHTML = 'No results found !';
+//                     sectionSearch.appendChild(noResSearch);
+//                 }
+//             });
+//         });
+//     }
+// }
 
 function SetDropdownMenuHeader() {
     /**
@@ -212,7 +241,7 @@ function AddAnimationTeamMember() {
         { name: "Loane", pseudo: "Paprika", img1: "Loane.jpg", img2: "Paprika.png" },
         { name: "Oscar", pseudo: "Luxouille", img1: "Oscar.jpg", img2: "Luxouille.jpg" },
         { name: "Gurval", pseudo: "Gurval", img1: "Gurval.jpg", img2: "Gurval.jpg" },
-        { name : "Allan", pseudo: "Trykeur", img1: "Allan.jpg", img2: "Trykeur.jpg"}
+        { name: "Allan", pseudo: "Trykeur", img1: "Allan.jpg", img2: "Trykeur.jpg" }
     ];
 
     function changeContent(imgElem, nameElem, img, name) {
@@ -379,7 +408,7 @@ function CreateMovieList(data, title, ID, parent) {
             LISTE_GENRE.then(liste_genre => {
                 let id_genre = liste_genre[0].id_genre_list[0];
 
-                let trailer_url = undefined; // GetURLTrailer(OMDb_data.imdbID).then(DataTrailer => {});
+                // let trailer_url = GetURLTrailer(OMDb_data.imdbID);
 
                 let IDMovie = movie.id_oeuvre;
                 let title = movie.original_title;
@@ -388,7 +417,9 @@ function CreateMovieList(data, title, ID, parent) {
                 let realeaseYear = SetMovieAttribute(movie.realease_year, OMDb_data.Year);
                 let genres = movie.genres;
 
-                let poster = OMDb_data.Poster; // RANDOM IMAGES : https://picsum.photos/200/200?random="+Math.floor(Math.random() * 100)
+                // RANDOM IMAGES
+                // let poster = "https://picsum.photos/200/200?random="+Math.floor(Math.random() * 100);
+                let poster = OMDb_data.Poster;
                 if (poster == undefined || poster == "N/A") { poster = 'Images/SweetDonutLogo.png' }
                 let synopsis = OMDb_data.Plot;
 
@@ -399,8 +430,6 @@ function CreateMovieList(data, title, ID, parent) {
 
                 AddHoverEffect(elem_li);
                 AddOpenModalOnClick(elem_li, IDMovie, title, rating, runtime, realeaseYear, genres, synopsis, poster, id_genre, watched);
-
-
 
             });
         });
@@ -685,8 +714,4 @@ window.addEventListener('load', function () {
         resetCookie('Registered');
     }
 
-    console.log(getCookie());
 });
-
-
-
