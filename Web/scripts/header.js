@@ -119,42 +119,44 @@ function AddAnimationPopUpInformation(message, animated = true) {
 /*-------------------------------------------------------------------------------------------
 ----------------------------------------- HEADER ---------------------------------------------
 --------------------------------------------------------------------------------------------*/
-function SearchBar() {
-    var baseUrl = window.location.origin;
-    let searchFormHeader = document.getElementById("search-form-header");
-
-    if(searchFormHeader){
-        searchFormHeader.addEventListener("submit", (e) => {
-        // let searchBarHeader = document.getElementById("search-bar-header");
-        let test = baseUrl + `/Web/search.html`; 
-        window.location.href = test;
-    });
-    }
-}
-
 // function SearchBar() {
+//     var baseUrl = window.location.origin;
 //     let searchFormHeader = document.getElementById("search-form-header");
 
 //     if(searchFormHeader){
 //         searchFormHeader.addEventListener("submit", (e) => {
-//             let searchBarValue = document.getElementById("search-bar-header").value;
-//             let request = `/Advancedsearch?title=${searchBarValue}`;
-//             var data = APIResquest(request);
-    
-//             // Affichage des résultats de la recherche
-//             data.then(data => {
-//                 if (data.length > 0) {
-//                     CreateMovieList(data, "Search result", "search-result-movie-list-group", document.getElementById('resultSearchHeader'));
-//                 }
-//                 else {
-//                     let noResSearch = document.createElement("h2");
-//                     noResSearch.innerHTML = 'No results found !';
-//                     sectionSearch.appendChild(noResSearch);
-//                 }
-//             });
-//         });
+//         // let searchBarHeader = document.getElementById("search-bar-header");
+//         let test = baseUrl + `/Web/search.html`; 
+//         window.location.href = test;
+//     });
 //     }
 // }
+
+function SearchBar() {
+    let searchFormHeader = document.getElementById("search-form-header");
+
+    if(searchFormHeader){
+        searchFormHeader.addEventListener("submit", (e) => {
+            e.preventDefault();
+            
+            let searchBarValue = document.getElementById("search-bar-header").value;
+            let request = `/Advancedsearch?title=${searchBarValue}`;
+            var data = APIResquest(request);
+    
+            // Affichage des résultats de la recherche
+            data.then(data => {
+                if (data.length > 0) {
+                    CreateMovieList(data, "Search result", "search-result-movie-list-group", document.getElementById('resultSearchHeader'));
+                }
+                else {
+                    let noResSearch = document.createElement("h2");
+                    noResSearch.innerHTML = 'No results found !';
+                    sectionSearch.appendChild(noResSearch);
+                }
+            });
+        });
+    }
+}
 
 function SetDropdownMenuHeader() {
     /**
