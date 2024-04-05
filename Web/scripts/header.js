@@ -234,7 +234,10 @@ function AddAnimationTeamMember() {
         { name: "Loane", pseudo: "Paprika", img1: "Loane.jpg", img2: "Paprika.png" },
         { name: "Oscar", pseudo: "Luxouille", img1: "Oscar.jpg", img2: "Luxouille.jpg" },
         { name: "Gurval", pseudo: "Gurval", img1: "Gurval.jpg", img2: "Gurval.jpg" },
-        { name: "Allan", pseudo: "Trykeur", img1: "Allan.jpg", img2: "Trykeur.jpg" }
+        { name: "Allan", pseudo: "Trykeur", img1: "Allan.jpg", img2: "Trykeur.jpg" },
+        { name: "Romain", pseudo: "Akeurs", img1: "Romain.jpg", img2: "Akeurs.jpeg" },
+        { name: "Arthus", pseudo: "Thus?", img1: "Arthus.jpg", img2: "Thus.png" },
+        { name: "Elouan", pseudo: "Jaspex", img1: "jaspex.webp", img2: "jaspex.webp" },
     ];
 
     function changeContent(imgElem, nameElem, img, name) {
