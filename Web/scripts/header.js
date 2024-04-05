@@ -122,7 +122,7 @@ function AddAnimationPopUpInformation(message, animated = true) {
 
 function SearchBar() {
     let searchFormHeader = document.getElementById("search-form-header");
-
+    
     if(searchFormHeader){
         searchFormHeader.addEventListener("submit", (e) => {
             e.preventDefault();
@@ -130,16 +130,18 @@ function SearchBar() {
             let searchBarValue = document.getElementById("search-bar-header").value;
             let request = `/Advancedsearch?title=${searchBarValue}`;
             var data = APIResquest(request);
-    
+            let resutsearch = document.getElementById("resultSearchHeader");
+            resutsearch.innerHTML = "";
             // Affichage des résultats de la recherche
             data.then(data => {
                 if (data.length > 0) {
                     CreateMovieList(data, "Search result", "search-result-movie-list-group", document.getElementById('resultSearchHeader'));
                 }
                 else {
-                    let noResSearch = document.createElement("h2");
-                    noResSearch.innerHTML = 'No results found !';
-                    sectionSearch.appendChild(noResSearch);
+                    
+                    var notfound = document.createElement("h2");
+                    notfound.innerHTML = 'No results found !';
+                    resutsearch.appendChild(notfound);
                 }
             });
         });
