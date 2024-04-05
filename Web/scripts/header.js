@@ -237,7 +237,7 @@ function AddAnimationTeamMember() {
         { name: "Allan", pseudo: "Trykeur", img1: "Allan.jpg", img2: "Trykeur.jpg" },
         { name: "Romain", pseudo: "Akeurs", img1: "Romain.jpg", img2: "Akeurs.jpeg" },
         { name: "Arthus", pseudo: "Thus?", img1: "Arthus.jpg", img2: "Thus.png" },
-        { name: "Elouan", pseudo: "Jaspex", img1: "jaspex.webp", img2: "jaspex.webp" },
+        { name: "Elouan", pseudo: "Jaspex", img1: "Elouan.jpg", img2: "jaspex.webp" },
     ];
 
     function changeContent(imgElem, nameElem, img, name) {
