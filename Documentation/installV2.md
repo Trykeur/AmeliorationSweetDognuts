@@ -18,7 +18,7 @@ Vous retrouverez les scripts necessaire dans le [dossier Implementation sur Gith
 
 ### Mise en place (Automatique)
 Pour mettre en place automatiquement la base de données, un fichier de backUp est disponible sur [ici](https://drive.google.com/file/d/1qumphe1AGi2yokk4-T1NRhx8MqgGMXOz/view?usp=drive_link) : 
-La backup est à utiliser dans une base vièrge et sur un environnement Windows, Linux ou MacOS. 
+La backup est à utiliser dans une base vièrge sur un environnement Windows, Linux ou MacOS. 
 
 Si vous avez un problème de schéma avec le précédent vous pouvez utilisez le dumpBackup.sql à jouer sur le terminal du docker contenant le container de PostgreSQL. Vous retrouverez le fichier [ici](https://drive.google.com/file/d/12OorDp8ui2T7JNR7lVPGEmdBmXhp5heQ/view?usp=drive_link). 
 
