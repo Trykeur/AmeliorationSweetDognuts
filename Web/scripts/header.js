@@ -119,18 +119,6 @@ function AddAnimationPopUpInformation(message, animated = true) {
 /*-------------------------------------------------------------------------------------------
 ----------------------------------------- HEADER ---------------------------------------------
 --------------------------------------------------------------------------------------------*/
-// function SearchBar() {
-//     var baseUrl = window.location.origin;
-//     let searchFormHeader = document.getElementById("search-form-header");
-
-//     if(searchFormHeader){
-//         searchFormHeader.addEventListener("submit", (e) => {
-//         // let searchBarHeader = document.getElementById("search-bar-header");
-//         let test = baseUrl + `/Web/search.html`; 
-//         window.location.href = test;
-//     });
-//     }
-// }
 
 function SearchBar() {
     let searchFormHeader = document.getElementById("search-form-header");
@@ -212,6 +200,7 @@ function AddAnimationAccountHeader() {
         resetCookie('Client');
         resetCookie('Profil');
         resetCookie('Watched');
+        resetCookie('IsAdult');
         AddAnimationPopUpInformation("Disconnecting");
         setInterval(function () { window.location.reload(); }, 3000);
     });
@@ -591,11 +580,18 @@ function LoginPageOnLoad() {
                         email.value = "";
                         password.value = "";
 
+
                         setCookie('Client', response.body['Client'], 1);
                         setCookie('Profil', response.body['Profil'], 1);
                         setCookie('Connected', true, 1);
+                        
+                        profil = getCookie('Profil');
 
-                        APIResquest(`/client/${getCookie('Profil')}/get/movie?field=id_oeuvre`).then(WatchedMovies => {
+                        APIResquest(`/profil/${profil}/isAdult`).then((isAdult) => {
+                            setCookie('IsAsult', isAdult.body[0]['adult_restriction'], 1);
+                        });
+                        
+                        APIResquest(`/client/${profil}/get/movie?field=id_oeuvre`).then(WatchedMovies => {
                             movieList = []
                             WatchedMovies.forEach(movie => { movieList.push(movie.id_oeuvre) });
                             setCookie('Watched', movieList, 1);
@@ -628,6 +624,7 @@ function RegisterPageOnLoad() {
             let email = document.getElementById('email-input-register');
             let password = document.getElementById('password-input-register');
             let confirmPassword = document.getElementById('confirm-password-input-register');
+            let adult_restriction = document.getElementById('age-input-register');
             let terms = document.getElementById('terms-check-register');
 
             let error = document.getElementById('input-error-register');
@@ -638,7 +635,7 @@ function RegisterPageOnLoad() {
             if (name.value != "" && email.value != "" && password.value != "" && confirmPassword.value != "") {
                 if (password.value == confirmPassword.value) {
                     if (terms.checked) {
-                        APIResquest_POST("/register", { 'name': name.value, 'email': email.value, 'password': password.value }).then((response) => {
+                        APIResquest_POST("/register", { 'name': name.value, 'email': email.value, 'password': password.value, 'adult_restriction': adult_restriction.checked }).then((response) => {
 
                             if (response.status == 200) {
                                 submitButton.querySelector(".spinner-border").classList.remove('collapse');

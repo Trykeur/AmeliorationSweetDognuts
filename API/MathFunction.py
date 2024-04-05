@@ -40,8 +40,7 @@ def Sim_Cos(V1,V2):
         C += V2[i]**2
 
     assert B != 0 or C != 0, "Sim_Cos les variables B et C sont égales à 0"
-    AssertionError(B != 0 or C != 0)
-            
+
     return A/(math.sqrt(B)*math.sqrt(C))
 
 def Sim_euclidienne(V1,V2):
@@ -61,7 +60,7 @@ def distance(x1, y1, x2, y2):
     xd = x2 - x1
     yd = y2 - y1
     
-    assert xd != 0 or yd != 0, "Les points sont identiques donc la distance est nulle"
+    # assert xd != 0 or yd != 0, "Les points sont identiques donc la distance est nulle"
     
     return math.sqrt((xd ** 2) + (yd ** 2))
 
@@ -117,9 +116,6 @@ test_error_handling(enjoyIndex, 5)  # Note positive
 # Test de distance
 print("\nTest de distance:")
 test_error_handling(distance, 1, 1, 3, 3)  # Points distincts
-
-
-
 
 print("\nTest qui vont provoquer une erreur : \n")
 

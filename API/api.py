@@ -7,7 +7,7 @@ from typing import List
 
 # Connection to Data base
 from connect import initialisationDB as initDB
-from connect import CreateAccount, AddProfilOeuvre, RemoveProfilOeuvre
+from connect import CreateAccount, AddProfilOeuvre, RemoveProfilOeuvre, IsAdult
 
 # Connection to ElasticSearch
 from connect import ES
@@ -131,7 +131,7 @@ def register(data:dict):
     verif_email = CLIENT.loc[CLIENT['email'] == data['email']]
     if(not verif_email.empty) :return JSONResponse(status_code=status.HTTP_401_UNAUTHORIZED, content=f"email already registered")
     
-    id_client,id_profil = CreateAccount(data['name'],data['email'],data['password'])
+    id_client,id_profil = CreateAccount(data['name'],data['email'],data['password'], data['adult_restriction'])
 
     CLIENT.loc[id_client] = [data['email'],data['password']]
     PROFIL.loc[(id_client,id_profil),:] = [data['name'],None]
@@ -198,6 +198,14 @@ def RemoveMovieProfil(data:dict):
     MOVIE_PROFIL.drop(MOVIE_PROFIL[(MOVIE_PROFIL['id_profil'] == data['id_profil']) & (MOVIE_PROFIL['id_oeuvre'] == data['id_oeuvre'])].index, inplace = True)
 
     return JSONResponse(status_code=status.HTTP_200_OK, content="Successful")
+
+
+@app.get("/profil/{id_profil}/isAdult")
+def GetAdultRestrictionByProfilId(id_profil:int):
+    response = IsAdult(id_profil)
+    response = RequestFilter(response, 'isAdult', 1)
+    return response
+
 
 @app.get("/client/{id_profil}/get/movie") 
 def GetMovieProfil(id_profil,field: List[str] = Query(None),limit = False):

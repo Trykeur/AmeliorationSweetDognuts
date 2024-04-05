@@ -8,11 +8,9 @@ from elasticsearch.helpers import bulk
 username='postgres'
 password='admin'
 host='localhost'
-database= 'Sae'
+database= 'SAE'
 schema = ""
 
-# HELLO I AM UNDER WATER
-# PLEASE HELP ME
 
 # Connexion SQL
 print("-- Database connexion ...")
@@ -28,7 +26,7 @@ ES = Elasticsearch("http://localhost:9200")
 def initialisationDB():
     print("-- Data initialisation ...")
     with engine.connect() as connection :
-        MOVIE_QUERY = """ WITH oeuvre_genre_list AS (
+        MOVIE_QUERY = """WITH oeuvre_genre_list AS (
                                 SELECT id_oeuvre,array_agg(id_genre) as id_genre_list ,array_agg(genre_name) as genre_name_list FROM oeuvre_genre GROUP BY id_oeuvre
                             )SELECT _movie.id_oeuvre,original_title,english_title,runtime_minutes,num_votes,average_rating,realease_year,id_genre_list,genre_name_list FROM _movie INNER JOIN oeuvre_genre_list on oeuvre_genre_list.id_oeuvre = _movie.id_oeuvre;
                         """
@@ -97,15 +95,16 @@ def initialisationCache(MOVIE):
     return {"ElasticSearch" : "L'insert dans le cache a bien été réalisé"}
 
 
-def CreateAccount(name,email,password):
+def CreateAccount(name,email,password,adult_restriction):
     global CLIENT, PROFIL
     with engine.connect() as connection :
-        connection.execute(sql.text(f"INSERT INTO Client_ (email, pwd, profil_name) values ('{email}', '{password}', '{name}');"))
+        connection.execute(sql.text(f"INSERT INTO Client_ (email, pwd, profil_name, adult_restriction) values ('{email}', '{password}', '{name}', '{adult_restriction}');"))
         id_client = pd.read_sql_query(sql.text(f"SELECT * FROM _Client WHERE email = '{email}'"),connection)['id_client'].values[0]
         id_profil = pd.read_sql_query(sql.text(f"SELECT * FROM _Profil WHERE id_client = '{id_client}'"),connection)['id_profil'].values[0]
-        connection.commit()
+        connection.commit() 
         
     return id_client, id_profil
+
 
 def AddProfilOeuvre(id_profil,id_oeuvre):
     with engine.connect() as connection :
@@ -120,3 +119,8 @@ def RemoveProfilOeuvre(id_profil,id_oeuvre):
 
         connection.commit() # TODO : commenter pour ne pas enregistrer dans la BDD (sinon ce sont des comptes temporaires j'usqu'a relancement de API)
     return
+
+def IsAdult(id_profil):
+    with engine.connect() as connexion:
+        isAdult = pd.read_sql_query(sql.text(f"select adult_restriction from _profil where id_profil = {id_profil};"),connexion)['adult_restriction'].values[0]
+    return isAdult
