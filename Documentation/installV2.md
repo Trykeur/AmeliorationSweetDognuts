@@ -68,14 +68,14 @@ Nous avons simplifié l'installation et le lancement des différents outils.
 
 Tout d'abord, vous devez lancer le script "installModulesWin.bat" qui se trouve dans le dossier "installModules" dans "Implementation".
 
-Ce fichier sert à installer directement sur la machine tous les modules nécessaires au projet.
+Ce fichier sert à installer directement sur la machine tous les modules python nécessaires au projet.
 
-Ensuite, une fois cela fait, il faut lancer le script "lancementAppWindows.bat" qui va exécuter ElasticSearch et l'API en même temps.
+Pour continuer, il faut exécuter docker deskstop afin de lancer le script "lancementAppWindows.bat" qui va exécuter ElasticSearch et l'API en même temps.
 
 
 ### Initialiser le projet (MacOs)
 
-Commencez par lier un container de docker avec le SGBD utilisé.
+Commencez par lier un container de docker avec le SGBD utilisé puis lancer tout les environnement commen widonws.
 
 Je conseil ici d'utiliser DBeaver qui permet de créer une connexion simple. Utilisez ce script pour les informations de connexion suivante : 
 
@@ -116,7 +116,7 @@ Une fois la connexion établie, si le fichier BackUpV3 ne fonctionne pas, faire 
 
 
 Une fois, l'environnement initialiser, modifiez le début du fichier de connexion "connect.py" avec les informations suivantes :
-```sh
+```py
 username=''
 password=''
 host='localhost'
@@ -126,7 +126,7 @@ port = '8765'  # Spécifiez le port ici
 
 # Connexion SQL
 print("-- Database connexion ...")
-engine = sql.create_engine(f'postgresql://{username}:{password}@{host}:8765/{database}')
+engine = sql.create_engine(f'postgresql://{username}:{password}@{host}:{port}/{database}')
 ```
 
 <b>Attention les informations "username", "password" et "database" sont à renseigner en fonction des informations du fichier docker-compose.yml</b>
