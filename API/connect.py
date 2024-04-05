@@ -6,15 +6,16 @@ from elasticsearch.helpers import bulk
 
 #TODO : Faire un fichier de connexion 
 username='postgres'
-password='admin'
+password='Trykeur_450'
 host='localhost'
 database= 'SAE'
+port = "5433"
 schema = ""
 
 
 # Connexion SQL
 print("-- Database connexion ...")
-engine = sql.create_engine(f'postgresql://{username}:{password}@{host}/{database}')
+engine = sql.create_engine(f'postgresql://{username}:{password}@{host}:{port}/{database}')
 
 # Connexion ElasticSearch
 print("-- ElasticSearch connexion ...")
@@ -27,9 +28,13 @@ def initialisationDB():
     print("-- Data initialisation ...")
     with engine.connect() as connection :
         MOVIE_QUERY = """WITH oeuvre_genre_list AS (
-                                SELECT id_oeuvre,array_agg(id_genre) as id_genre_list ,array_agg(genre_name) as genre_name_list FROM oeuvre_genre GROUP BY id_oeuvre
-                            )SELECT _movie.id_oeuvre,original_title,english_title,runtime_minutes,num_votes,average_rating,realease_year,id_genre_list,genre_name_list FROM _movie INNER JOIN oeuvre_genre_list on oeuvre_genre_list.id_oeuvre = _movie.id_oeuvre;
-                        """
+	                        SELECT id_oeuvre,array_agg(id_genre) as id_genre_list ,array_agg(genre_name) as genre_name_list 
+	                        FROM oeuvre_genre 
+                            GROUP BY id_oeuvre)
+                        SELECT _oeuvre.id_oeuvre,original_title,english_title,runtime_minutes,num_votes,average_rating,release_year,id_genre_list,genre_name_list 
+                        FROM _oeuvre 
+                        INNER JOIN oeuvre_genre_list on oeuvre_genre_list.id_oeuvre = _oeuvre.id_oeuvre;
+                    """
         MOVIE = pd.read_sql_query(sql.text(MOVIE_QUERY),connection)
         GENRE = pd.read_sql_query(sql.text("SELECT id_genre,genre_name FROM _genre"),connection)
         MOVIE_PROFIL = pd.read_sql_query(sql.text("""SELECT * FROM _profil_oeuvre """),connection)
@@ -52,7 +57,7 @@ def initialisationDB():
     MOVIE.replace(np.nan, -1,inplace=True)
     MOVIE["runtime_minutes"] = pd.to_numeric(MOVIE["runtime_minutes"],downcast="integer")
     MOVIE["num_votes"] = pd.to_numeric(MOVIE["num_votes"],downcast="integer")
-    MOVIE["realease_year"] = pd.to_numeric(MOVIE["realease_year"],downcast="integer")
+    MOVIE["release_year"] = pd.to_numeric(MOVIE["release_year"],downcast="integer")
     MOVIE["average_rating"] = pd.to_numeric(MOVIE["average_rating"],downcast="float")
     MOVIE.replace(-1, None,inplace=True)
 
@@ -73,7 +78,7 @@ def initialisationCache(MOVIE):
         title = MOVIE.at[index, 'original_title']
         runtime = MOVIE.at[index, 'runtime_minutes']
         rating = MOVIE.at[index,'average_rating']
-        realease = MOVIE.at[index,'realease_year']
+        release = MOVIE.at[index,'release_year']
         genre_name = MOVIE.at[index,'genre_name_list']
         bulk_data.append(
             {
@@ -84,7 +89,7 @@ def initialisationCache(MOVIE):
                     "original_title": title,
                     "runtime_minutes" : runtime,
                     "average_rating" : rating,
-                    "realease_year" : realease,
+                    "release_year" : release,
                     "id_genre_list": genres,
                     "genre_name_list": genre_name
                 }

@@ -467,7 +467,7 @@ def TopRatedMovies(field: List[str] = Query(None), limit : int = LIMIT):
     Top Rated Movies
     EXAMPLE : 
     - http://127.0.0.1:8000/recommandation/TopRatedMovies
-    - http://127.0.0.1:8000/recommandation/TopRatedMovies?field=original_title&field=realease_year&field=average_rating
+    - http://127.0.0.1:8000/recommandation/TopRatedMovies?field=original_title&field=release_year&field=average_rating
     """
     try : limit = int(limit)
     except : return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content="'limit' must be an integer")
@@ -487,7 +487,7 @@ def TopPopularMovies(field: List[str] = Query(None), limit : int = LIMIT):
     Top Popular Movies
     EXAMPLE : 
     - http://127.0.0.1:8000/recommandation/TopPopularMovies
-    - http://127.0.0.1:8000/recommandation/TopPopularMovies?field=original_title&field=realease_year&field=average_rating
+    - http://127.0.0.1:8000/recommandation/TopPopularMovies?field=original_title&field=release_year&field=average_rating
     """
     try : limit = int(limit)
     except : return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content="'limit' must be an integer")
@@ -503,14 +503,14 @@ def TopPopularMovies(field: List[str] = Query(None), limit : int = LIMIT):
 @app.get("/recommandation/TopYears")
 def TopYears(limit : int = LIMIT):
     print(limit,LIMIT)
-    df_temp = MOVIE.dropna(subset=['realease_year'])
+    df_temp = MOVIE.dropna(subset=['release_year'])
 
     # partitionnement
-    YearsRange = (df_temp['realease_year'].min(),df_temp['realease_year'].max())
+    YearsRange = (df_temp['release_year'].min(),df_temp['release_year'].max())
     YearsRange = [int(y-y%10) for y in YearsRange]
     partitionnementByYears = [(x,x+10) for x in range(YearsRange[0],YearsRange[1],10)]
     for inter in partitionnementByYears:
-        df_temp.loc[(df_temp.realease_year >= inter[0]) & (df_temp.realease_year < inter[1]), 'YEAR_GROUP'] = inter[0]
+        df_temp.loc[(df_temp.release_year >= inter[0]) & (df_temp.release_year < inter[1]), 'YEAR_GROUP'] = inter[0]
     
     df_temp = df_temp.groupby('YEAR_GROUP')
     
@@ -560,9 +560,9 @@ def Advancedsearch(title = False, reg = False, runtimeMIN = False, runtimeMAX = 
         if(ratingMAX):
             must.append({"range":{'average_rating':{'lte':ratingMAX}}})
         if(yearMIN):
-            must.append({"range":{'realease_year':{'gte':yearMIN}}})
+            must.append({"range":{'release_year':{'gte':yearMIN}}})
         if(yearMAX):
-            must.append({"range":{'realease_year':{'lte':yearMAX}}})
+            must.append({"range":{'release_year':{'lte':yearMAX}}})
         if(listeGenre):
             must.append({"terms":{"id_genre_list" : listeGenre}})
         
